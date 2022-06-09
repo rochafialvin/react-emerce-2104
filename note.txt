@@ -16,7 +16,7 @@ Alert Email salah
 Alert Password salah
 Alert Email tidak terdaftar
 
-axios.get("localhost:2104/users", params: { fullname: 'Jamal', email: 'jams@mail.com' })
+axios.get("localhost:2104/users", {params: { fullname: 'Jamal', email: 'jams@mail.com' }})
 
 Alert Login berhasil
 console.log(user)

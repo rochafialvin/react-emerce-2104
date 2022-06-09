@@ -1,3 +1,22 @@
 JSX != HTML
 Kode javascript yang syntax nya dibuat mirip dengan html.
 Memudahkan dalam membuat kerangka website
+
+
+--- EXERCISE
+
+Register
+Create data baru, terdiri id, fullname, username, email, password
+Unique : username, email
+Alert Registrasi berhasil
+
+Login
+Get data berdasarkan email dan password
+Alert Email salah
+Alert Password salah
+Alert Email tidak terdaftar
+
+axios.get("localhost:2104/users", params: { fullname: 'Jamal', email: 'jams@mail.com' })
+
+Alert Login berhasil
+console.log(user)

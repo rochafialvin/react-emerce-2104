@@ -16,6 +16,27 @@ function Register() {
 
   const onRegisterClick = async () => {
     try {
+      // cek apakah username sudah digunakan
+      const resGetUserByUsername = await axios.get(
+        "http://localhost:2104/users",
+        {
+          params: { username: formState.username },
+        }
+      );
+
+      if (resGetUserByUsername.data.length) {
+        return alert("Username sudah digunakan");
+      }
+
+      // cek apakah email sudah digunakan
+      const resGetUserByEmail = await axios.get("http://localhost:2104/users", {
+        params: { email: formState.email },
+      });
+
+      if (resGetUserByEmail.data.length) {
+        return alert("Email sudah digunakan");
+      }
+
       await axios.post("http://localhost:2104/users", formState);
       alert("Berhasil Register");
     } catch (error) {

@@ -1,0 +1,3 @@
+JSX != HTML
+Kode javascript yang syntax nya dibuat mirip dengan html.
+Memudahkan dalam membuat kerangka website

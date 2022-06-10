@@ -1,6 +1,34 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import axios from "axios";
 
 function Login() {
+  const [formState, setFormState] = useState({
+    username: "",
+    password: "",
+  });
+
+  const handleChange = (event) => {
+    setFormState({ ...formState, [event.target.name]: event.target.value });
+  };
+
+  const onLoginClick = async () => {
+    try {
+      const resGetUser = await axios.get("http://localhost:2104/users", {
+        params: { username: formState.username, password: formState.password },
+      });
+
+      if (!resGetUser.data.length) {
+        return alert("Username atau password salah");
+      }
+
+      alert("Login Berhasil");
+      console.log({ user: resGetUser.data });
+    } catch (error) {
+      console.log({ error });
+    }
+  };
+
   return (
     <div className="container">
       <div className="row">
@@ -22,15 +50,22 @@ function Login() {
                 placeholder="Username"
                 type="text"
                 className="form-control my-2"
+                onChange={handleChange}
               />
               <input
                 name="password"
                 placeholder="Password"
-                type="password"
+                type="text"
                 className="form-control my-2"
+                onChange={handleChange}
               />
               <div className="d-flex flex-row justify-content-between align-items-center">
-                <button className={`btn btn-primary mt-2 `}>Login</button>
+                <button
+                  onClick={onLoginClick}
+                  className={`btn btn-primary mt-2 `}
+                >
+                  Login
+                </button>
                 <Link to="/register">Or register</Link>
               </div>
             </div>

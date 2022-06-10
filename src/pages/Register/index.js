@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import axiosInstance from "../../services/axios";
 
 function Register() {
   const [formState, setFormState] = useState({
@@ -17,19 +17,16 @@ function Register() {
   const onRegisterClick = async () => {
     try {
       // cek apakah username sudah digunakan
-      const resGetUserByUsername = await axios.get(
-        "http://localhost:2104/users",
-        {
-          params: { username: formState.username },
-        }
-      );
+      const resGetUserByUsername = await axiosInstance.get("/users", {
+        params: { username: formState.username },
+      });
 
       if (resGetUserByUsername.data.length) {
         return alert("Username sudah digunakan");
       }
 
       // cek apakah email sudah digunakan
-      const resGetUserByEmail = await axios.get("http://localhost:2104/users", {
+      const resGetUserByEmail = await axiosInstance.get("/users", {
         params: { email: formState.email },
       });
 
@@ -37,7 +34,7 @@ function Register() {
         return alert("Email sudah digunakan");
       }
 
-      await axios.post("http://localhost:2104/users", formState);
+      await axiosInstance.post("/users", formState);
       alert("Berhasil Register");
     } catch (error) {
       console.log({ error });

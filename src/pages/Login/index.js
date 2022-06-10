@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import axios from "axios";
+import axiosInstance from "../../services/axios";
 
 function Login() {
   const [formState, setFormState] = useState({
@@ -14,8 +14,11 @@ function Login() {
 
   const onLoginClick = async () => {
     try {
-      const resGetUser = await axios.get("http://localhost:2104/users", {
-        params: { username: formState.username, password: formState.password },
+      const resGetUser = await axiosInstance.get("/users", {
+        params: {
+          username: formState.username,
+          password: formState.password,
+        },
       });
 
       if (!resGetUser.data.length) {

@@ -1,0 +1,4 @@
+useEffect akan running setiap kali komponen melakukan render (default)
+
+Jika kita berikan argument kedua berupa array yang berisi daftar state.
+Jika state yang berada di dalam array berubah, functionnya akan jalan.

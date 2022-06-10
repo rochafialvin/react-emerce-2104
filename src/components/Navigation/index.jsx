@@ -29,6 +29,11 @@ function Navigation() {
             Register
           </NavLink>
         </NavItem>
+        <NavItem>
+          <NavLink tag={Link} to="/note">
+            Note
+          </NavLink>
+        </NavItem>
       </Nav>
     </Navbar>
   );

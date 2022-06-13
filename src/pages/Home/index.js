@@ -4,6 +4,11 @@ import axiosInstance from "../../services/axios";
 
 function Home() {
   const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [formState, setFormstate] = useState({
+    keyword: "",
+    category: "",
+  });
 
   useEffect(() => {
     fetchProducts();
@@ -13,6 +18,7 @@ function Home() {
     try {
       const resGetProducts = await axiosInstance.get("/products");
       setProducts(resGetProducts.data);
+      setFilteredProducts(resGetProducts.data);
     } catch (error) {
       alert("Terjadi kesalahan");
       console.log({ error });
@@ -20,17 +26,25 @@ function Home() {
   };
 
   const renderProducts = () => {
-    return products.map((product) => (
+    return filteredProducts.map((product) => (
       <ProductCard key={product.id} product={product} />
     ));
   };
 
-  const handleChange = () => {
-    // copy paste dari komponen lain
+  const handleChange = (event) => {
+    setFormstate({ ...formState, [event.target.name]: event.target.value });
   };
   const btnSearchHandler = () => {
     // untuk search products berdasarkan nama dan category
+    const filteredProducts = products.filter((product) => {
+      const productName = product.productName.toLowerCase();
+      const keywordName = formState.keyword.toLowerCase();
+      return productName.includes(keywordName);
+    });
+
+    setFilteredProducts(filteredProducts);
   };
+
   const selectSortHandler = () => {
     // sorting products
   };

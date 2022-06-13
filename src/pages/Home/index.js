@@ -20,7 +20,7 @@ function Home() {
       setProducts(resGetProducts.data);
       setFilteredProducts(resGetProducts.data);
     } catch (error) {
-      alert("Terjadi kesalahan");
+      alert("Terjadi kesalahan. Api udah dinyalain ?");
       console.log({ error });
     }
   };

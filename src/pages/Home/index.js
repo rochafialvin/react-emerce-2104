@@ -39,7 +39,10 @@ function Home() {
     const filteredProducts = products.filter((product) => {
       const productName = product.productName.toLowerCase();
       const keywordName = formState.keyword.toLowerCase();
-      return productName.includes(keywordName);
+      return (
+        productName.includes(keywordName) &&
+        product.category.includes(formState.category)
+      );
     });
 
     setFilteredProducts(filteredProducts);

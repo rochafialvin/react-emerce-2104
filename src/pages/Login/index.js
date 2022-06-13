@@ -1,12 +1,16 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import axiosInstance from "../../services/axios";
+import { useDispatch } from "react-redux";
+import { login } from "../../store/slices/authSlice";
 
 function Login() {
   const [formState, setFormState] = useState({
     username: "",
     password: "",
   });
+
+  const dispatch = useDispatch();
 
   const handleChange = (event) => {
     setFormState({ ...formState, [event.target.name]: event.target.value });
@@ -25,8 +29,14 @@ function Login() {
         return alert("Username atau password salah");
       }
 
-      alert("Login Berhasil");
-      console.log({ user: resGetUser.data });
+      // user = {id, username, name, email, password}
+      const user = resGetUser.data[0];
+      // action = { payload : {id, username, name, email, password} }
+      // login : action creator
+      const action = login(user);
+
+      // dispatch mengirim object "action" ke reducer
+      dispatch(action);
     } catch (error) {
       console.log({ error });
     }

@@ -2,6 +2,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 // NOTES
+import InputBox from "./components/InputBox";
 
 // PROJECT
 import Navigation from "./components/Navigation";
@@ -19,7 +20,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/Register" element={<Register />} />
-        <Route path="/note" element={<UseEffectComponent />} />
+        <Route path="/note" element={<InputBox />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

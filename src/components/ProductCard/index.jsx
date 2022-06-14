@@ -4,7 +4,7 @@ import { Button } from "reactstrap";
 import "./style.css";
 
 function ProductCard({ product }) {
-  const { productName, productImage, price } = product;
+  const { id, productName, productImage, price } = product;
   return (
     <div className="card product-card w-25">
       <img src={productImage} alt="" />
@@ -19,7 +19,7 @@ function ProductCard({ product }) {
             outline
             color="primary"
             tag={Link}
-            to="/note"
+            to={`/products/${id}`}
           >
             Detail
           </Button>

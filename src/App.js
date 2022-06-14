@@ -13,6 +13,8 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 import Register from "./pages/Register";
+import DetailProduct from "./pages/Detail";
+
 import UseEffectComponent from "./notes/useEffect";
 
 function App() {
@@ -41,7 +43,9 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/Register" element={<Register />} />
+          <Route path="/register" element={<Register />} />
+          {/* path variable */}
+          <Route path="/products/:productId" element={<DetailProduct />} />
           <Route path="/note" element={<InputBox />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

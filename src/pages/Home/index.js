@@ -34,7 +34,8 @@ function Home() {
   const handleChange = (event) => {
     setFormstate({ ...formState, [event.target.name]: event.target.value });
   };
-  const btnSearchHandler = () => {
+
+  const onFilterHandler = () => {
     // untuk search products berdasarkan nama dan category
     const filteredProducts = products.filter((product) => {
       const productName = product.productName.toLowerCase();
@@ -48,8 +49,53 @@ function Home() {
     setFilteredProducts(filteredProducts);
   };
 
-  const selectSortHandler = () => {
+  const btnSearchHandler = () => {
+    onFilterHandler();
+  };
+
+  const selectSortHandler = (event) => {
     // sorting products
+
+    const sortBy = event.target.value;
+    const tmpProducts = [...filteredProducts];
+
+    // filteredProducts : A C B F E
+    switch (sortBy) {
+      case "az":
+        tmpProducts.sort((a, b) => {
+          if (a.productName < b.productName) {
+            return -1;
+          } else if (a.productName > b.productName) {
+            return 1;
+          } else {
+            return 0;
+          }
+        });
+        setFilteredProducts(tmpProducts);
+        break;
+      case "za":
+        tmpProducts.sort((a, b) => {
+          if (a.productName < b.productName) {
+            return 1;
+          } else if (a.productName > b.productName) {
+            return -1;
+          } else {
+            return 0;
+          }
+        });
+        setFilteredProducts(tmpProducts);
+        break;
+      case "lowPrice":
+        tmpProducts.sort((a, b) => a.price - b.price);
+        setFilteredProducts(tmpProducts);
+        break;
+      case "highPrice":
+        tmpProducts.sort((a, b) => b.price - a.price);
+        setFilteredProducts(tmpProducts);
+        break;
+      default:
+        onFilterHandler();
+    }
   };
 
   return (

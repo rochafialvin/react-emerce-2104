@@ -11,10 +11,17 @@ import {
 } from "reactstrap";
 
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../store/slices/authSlice";
 
 function Navigation() {
   const { id, username } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
+  const onLogoutClick = () => {
+    dispatch(logout());
+    localStorage.removeItem("userInfo");
+  };
 
   return (
     <Navbar color="dark" dark expand="md">
@@ -31,7 +38,7 @@ function Navigation() {
               <DropdownItem>Cart</DropdownItem>
               <DropdownItem>Transaction</DropdownItem>
               <DropdownItem divider />
-              <DropdownItem>Logout</DropdownItem>
+              <DropdownItem onClick={onLogoutClick}>Logout</DropdownItem>
             </DropdownMenu>
           </UncontrolledDropdown>
         ) : (

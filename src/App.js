@@ -31,7 +31,7 @@ function App() {
       }
 
       setisLocalStorageChecked(true);
-    }, 1000);
+    }, 200);
   }, []);
 
   if (isLocalStorageChecked) {

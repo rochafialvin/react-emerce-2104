@@ -6,6 +6,7 @@ function DetailProduct() {
   // params.productId --> gunakan untuk ambil data
   const params = useParams();
   const [product, setProduct] = useState({});
+  const [quantity, setQuantity] = useState(0);
 
   const fetchProduct = async () => {
     try {
@@ -15,6 +16,14 @@ function DetailProduct() {
       alert("Terjadi kesalahan");
       console.log(error);
     }
+  };
+
+  const increaseQuantity = () => {
+    setQuantity(quantity + 1);
+  };
+
+  const decreaseQuantity = () => {
+    setQuantity(quantity - 1);
   };
 
   useEffect(() => {
@@ -33,9 +42,17 @@ function DetailProduct() {
           <h5>Rp {price?.toLocaleString("id")}</h5>
           <p>{description}</p>
           <div className="d-flex flex-row align-items-center">
-            <button className="btn btn-primary ">-</button>
-            <strong className="text-center mx-4">30</strong>
-            <button className="btn btn-primary ">+</button>
+            <button
+              disabled={quantity == 0}
+              className="btn btn-primary"
+              onClick={decreaseQuantity}
+            >
+              -
+            </button>
+            <strong className="text-center mx-4">{quantity}</strong>
+            <button className="btn btn-primary" onClick={increaseQuantity}>
+              +
+            </button>
           </div>
           <button className="btn btn-success mt-3">Add to cart</button>
         </div>

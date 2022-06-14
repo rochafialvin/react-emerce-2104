@@ -1,10 +1,12 @@
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { useState } from "react";
 import axiosInstance from "../../services/axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../store/slices/authSlice";
 
 function Login() {
+  const username = useSelector((state) => state.auth.username);
+
   const [formState, setFormState] = useState({
     username: "",
     password: "",
@@ -45,6 +47,9 @@ function Login() {
       console.log({ error });
     }
   };
+
+  // jika sudah login, diarahkan ke home page
+  if (username) return <Navigate to="/" replace />;
 
   return (
     <div className="container">

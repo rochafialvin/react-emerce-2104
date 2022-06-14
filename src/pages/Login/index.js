@@ -35,8 +35,12 @@ function Login() {
       // login : action creator
       const action = login(user);
 
-      // dispatch mengirim object "action" ke reducer
+      // dispatch mengirim object "action" ke reducer kemudian disimpan di state
       dispatch(action);
+      // simpan data login di localStorage
+      const userInfo = { id: user.id, username: user.username };
+      const strUserInfo = JSON.stringify(userInfo);
+      localStorage.setItem("userInfo", strUserInfo);
     } catch (error) {
       console.log({ error });
     }

@@ -6,7 +6,7 @@ import "./style.css";
 function ProductCard({ product }) {
   const { productName, productImage, price } = product;
   return (
-    <div className="card product-card">
+    <div className="card product-card w-25">
       <img src={productImage} alt="" />
       <div className="mt-2">
         <div>

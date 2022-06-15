@@ -51,8 +51,6 @@ function DetailProduct() {
       params: { productId: id, userId },
     });
 
-    console.log(res.data);
-
     const foundCart = res.data[0];
 
     if (foundCart) {

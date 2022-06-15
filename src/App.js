@@ -16,6 +16,7 @@ import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 import Register from "./pages/Register";
 import DetailProduct from "./pages/Detail";
+import Cart from "./pages/Cart";
 
 function App() {
   const [isLocalStorageChecked, setisLocalStorageChecked] = useState(false);
@@ -44,6 +45,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/cart" element={<Cart />} />
           {/* path variable */}
           <Route path="/products/:productId" element={<DetailProduct />} />
           <Route path="/note" element={<UseStateComponent />} />

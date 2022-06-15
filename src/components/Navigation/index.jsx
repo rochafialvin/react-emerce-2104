@@ -35,7 +35,9 @@ function Navigation() {
               Hello, {username}
             </DropdownToggle>
             <DropdownMenu>
-              <DropdownItem>Cart</DropdownItem>
+              <DropdownItem tag={Link} to="/cart">
+                Cart
+              </DropdownItem>
               <DropdownItem>Transaction</DropdownItem>
               <DropdownItem divider />
               <DropdownItem onClick={onLogoutClick}>Logout</DropdownItem>

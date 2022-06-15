@@ -1,18 +1,29 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function UseState() {
-  const [mie, setMie] = useState(10);
+  const [attempt, setAttempt] = useState(0);
   // let mie = 10;
 
+  // Akan running setiap kali render
+  // useEffect(() => {
+  //   console.log("running");
+  // });
+
+  // Akan running satu kali, setelah render yg pertama
+  // useEffect(() => {
+  //   console.log("running");
+  // }, []);
+
   const ubahMie = () => {
-    setMie(20);
-    // mie = 20;
-    console.log("Angka telah berubah");
+    if (attempt == 5) {
+      return alert("Sudah 5 kali percobaan");
+    }
+    setAttempt(attempt + 1);
   };
 
   return (
     <div>
-      <p>Jualan {mie} mie</p>
+      <p>Attempt : {attempt}</p>
       <button onClick={ubahMie}>Ubah Mie</button>
     </div>
   );

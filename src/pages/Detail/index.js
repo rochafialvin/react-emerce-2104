@@ -47,9 +47,24 @@ function DetailProduct() {
       productId: id,
     };
 
-    await axiosInstance.post("/cart", cart);
+    const res = await axiosInstance.get("/cart", {
+      params: { productId: id },
+    });
 
-    alert("Berhasil di tambahkan ke cart");
+    const foundCart = res.data[0];
+
+    if (foundCart) {
+      // id dari foundCart dibuatkan alias yaitu foundCartId
+      const { id: foundCartId, quantity: founcCartQuantity } = foundCart;
+      const newQuantity = founcCartQuantity + quantity;
+      await axiosInstance.patch(`/cart/${foundCartId}`, {
+        quantity: newQuantity,
+      });
+      alert("Quantity berhasil di update");
+    } else {
+      await axiosInstance.post("/cart", cart);
+      alert("Berhasil di tambahkan ke cart");
+    }
   };
 
   const { productImage, productName, price, description } = product;

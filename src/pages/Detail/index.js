@@ -51,12 +51,14 @@ function DetailProduct() {
       params: { productId: id },
     });
 
+    console.log(res.data);
+
     const foundCart = res.data[0];
 
     if (foundCart) {
       // id dari foundCart dibuatkan alias yaitu foundCartId
-      const { id: foundCartId, quantity: founcCartQuantity } = foundCart;
-      const newQuantity = founcCartQuantity + quantity;
+      const { id: foundCartId, quantity: foundCartQuantity } = foundCart;
+      const newQuantity = foundCartQuantity + quantity;
       await axiosInstance.patch(`/cart/${foundCartId}`, {
         quantity: newQuantity,
       });

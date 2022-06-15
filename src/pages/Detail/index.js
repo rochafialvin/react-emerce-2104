@@ -48,7 +48,7 @@ function DetailProduct() {
     };
 
     const res = await axiosInstance.get("/cart", {
-      params: { productId: id },
+      params: { productId: id, userId },
     });
 
     console.log(res.data);

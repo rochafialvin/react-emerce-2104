@@ -23,18 +23,21 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setTimeout(() => {
-      const userLocalStorage = localStorage.getItem("userInfo");
+    // string
+    const userLocalStorage = localStorage.getItem("userInfo");
 
-      if (userLocalStorage) {
-        // simpan ke global state
-        const user = JSON.parse(userLocalStorage);
-        const action = login(user);
-        dispatch(action);
-      }
+    // ada ga isinya ?
+    if (userLocalStorage) {
+      // ubah string menjadi object
+      const user = JSON.parse(userLocalStorage);
+      // objectnya dimasukkan ke action creator login
+      // menghasilkan action --> { type: "auth/login", payload : user }
+      const action = login(user);
+      // kirim ke reducer
+      dispatch(action);
+    }
 
-      setisLocalStorageChecked(true);
-    }, 200);
+    setisLocalStorageChecked(true);
   }, []);
 
   if (isLocalStorageChecked) {

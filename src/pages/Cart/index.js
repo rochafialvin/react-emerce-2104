@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import axiosInstance from "../../services/axios";
+import { useNavigate } from "react-router-dom";
 
 function Cart() {
+  const navigate = useNavigate();
   const [isShowSummary, setIsShowSummary] = useState(false);
   const [cart, setCart] = useState([]);
   const [priceState, setPriceState] = useState({
@@ -11,6 +13,13 @@ function Cart() {
     tax: 0,
     total: 0,
   });
+
+  const [paymentState, setPaymentState] = useState({
+    recipient: "",
+    address: "",
+    cash: 0,
+  });
+
   const userId = useSelector((state) => state.auth.id);
 
   useEffect(() => {
@@ -57,8 +66,67 @@ function Cart() {
   const onCheckoutClick = () => {
     setIsShowSummary(true);
   };
-  const handleChange = () => {};
-  const onPaymentClick = () => {};
+
+  const handleChange = (event) => {
+    setPaymentState({
+      ...paymentState,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const onPaymentClick = async () => {
+    try {
+      const current = new Date();
+      const months = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ];
+
+      const year = current.getFullYear();
+      const month = current.getMonth();
+      const date = current.getDate();
+
+      const transaction = {
+        userId,
+        address: paymentState.address,
+        totalPayment: priceState.subTotal,
+        recipientName: paymentState.recipient,
+        transactionDate: {
+          date,
+          year,
+          month: month + 1,
+          hours: current.getHours(),
+          minutes: current.getMinutes(),
+          monthWord: months[month],
+        },
+        transactionItems: [...cart],
+        invoiceNumber: `INV/${year}${month}${date}`,
+      };
+
+      // membuat object transaction
+      await axiosInstance.post("/transactions", transaction);
+
+      // hapus semua data di cart milik user
+      for (const cardObj of cart) {
+        await axiosInstance.delete(`/cart/${cardObj.id}`);
+      }
+
+      navigate("/", { replace: true });
+    } catch (error) {
+      alert("Terjadi kesalahan");
+      console.log(error);
+    }
+  };
 
   if (!userId) return <Navigate to="/" replace />;
 
@@ -118,7 +186,7 @@ function Cart() {
                 <input
                   type="text"
                   className="form-control mb-3"
-                  name="recipientName"
+                  name="recipient"
                   onChange={handleChange}
                 />
                 <label htmlFor="address">Address</label>
@@ -132,14 +200,15 @@ function Cart() {
               <div className="card-footer">
                 <div className="d-flex flex-row justify-content-between align-items-center">
                   <input
-                    name="payment"
+                    name="cash"
                     className="form-control mx-1"
-                    type="number"
+                    type="text"
                     onChange={handleChange}
                   />
                   <button
                     onClick={onPaymentClick}
                     className="btn btn-outline-success mx-1"
+                    disabled={paymentState.cash < priceState.subTotal}
                   >
                     Pay
                   </button>

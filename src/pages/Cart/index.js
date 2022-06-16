@@ -4,6 +4,7 @@ import { Navigate } from "react-router-dom";
 import axiosInstance from "../../services/axios";
 
 function Cart() {
+  const [isShowSummary, setIsShowSummary] = useState(false);
   const [cart, setCart] = useState([]);
   const [priceState, setPriceState] = useState({
     subTotal: 0,
@@ -53,6 +54,9 @@ function Cart() {
     });
   };
 
+  const onCheckoutClick = () => {
+    setIsShowSummary(true);
+  };
   const handleChange = () => {};
   const onPaymentClick = () => {};
 
@@ -76,64 +80,73 @@ function Cart() {
             <tfoot className="bg-light">
               <tr>
                 <td colSpan={6}>
-                  <button className="btn btn-outline-success">Checkout</button>
+                  {!isShowSummary && (
+                    <button
+                      className="btn btn-outline-success"
+                      onClick={onCheckoutClick}
+                    >
+                      Checkout
+                    </button>
+                  )}
                 </td>
               </tr>
             </tfoot>
           </table>
         </div>
         <div className="col-3">
-          <div className="card text-left">
-            <div className="card-header">
-              <strong>Order Summary</strong>
-            </div>
-            <div className="card-body">
-              <div className="d-flex my-2 flex-row justify-content-between align-items-center">
-                <span className="font-weight-bold">Subtotal Price</span>
-                <span>Rp {priceState.subTotal}</span>
+          {isShowSummary ? (
+            <div className="card text-left">
+              <div className="card-header">
+                <strong>Order Summary</strong>
               </div>
-              <div className="d-flex my-2 flex-row justify-content-between align-items-center">
-                <span className="font-weight-bold">Tax Fee (5%)</span>
-                <span>Rp {priceState.tax}</span>
+              <div className="card-body">
+                <div className="d-flex my-2 flex-row justify-content-between align-items-center">
+                  <span className="font-weight-bold">Subtotal Price</span>
+                  <span>Rp {priceState.subTotal}</span>
+                </div>
+                <div className="d-flex my-2 flex-row justify-content-between align-items-center">
+                  <span className="font-weight-bold">Tax Fee (5%)</span>
+                  <span>Rp {priceState.tax}</span>
+                </div>
+                <div className="d-flex my-2 flex-row justify-content-between align-items-center">
+                  <span className="font-weight-bold">Total Price</span>
+                  <span>Rp {priceState.total}</span>
+                </div>
               </div>
-              <div className="d-flex my-2 flex-row justify-content-between align-items-center">
-                <span className="font-weight-bold">Total Price</span>
-                <span>Rp {priceState.total}</span>
-              </div>
-            </div>
-            <div className="card-body border-top">
-              <label htmlFor="recipientName">Recipient Name</label>
-              <input
-                type="text"
-                className="form-control mb-3"
-                name="recipientName"
-                onChange={handleChange}
-              />
-              <label htmlFor="address">Address</label>
-              <input
-                type="text"
-                className="form-control"
-                name="address"
-                onChange={handleChange}
-              />
-            </div>
-            <div className="card-footer">
-              <div className="d-flex flex-row justify-content-between align-items-center">
+              <div className="card-body border-top">
+                <label htmlFor="recipientName">Recipient Name</label>
                 <input
-                  name="payment"
-                  className="form-control mx-1"
-                  type="number"
+                  type="text"
+                  className="form-control mb-3"
+                  name="recipientName"
                   onChange={handleChange}
                 />
-                <button
-                  onClick={onPaymentClick}
-                  className="btn btn-outline-success mx-1"
-                >
-                  Pay
-                </button>
+                <label htmlFor="address">Address</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="address"
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="card-footer">
+                <div className="d-flex flex-row justify-content-between align-items-center">
+                  <input
+                    name="payment"
+                    className="form-control mx-1"
+                    type="number"
+                    onChange={handleChange}
+                  />
+                  <button
+                    onClick={onPaymentClick}
+                    className="btn btn-outline-success mx-1"
+                  >
+                    Pay
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
+          ) : null}
         </div>
       </div>
     </div>

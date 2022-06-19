@@ -121,6 +121,7 @@ function Cart() {
         await axiosInstance.delete(`/cart/${cardObj.id}`);
       }
 
+      // replace : true membuat user tidak bisa kembali ke cart dengan cara menekan tombol back di browswer
       navigate("/", { replace: true });
     } catch (error) {
       alert("Terjadi kesalahan");
@@ -148,6 +149,7 @@ function Cart() {
             <tfoot className="bg-light">
               <tr>
                 <td colSpan={6}>
+                  {/* kalau isShowSummary bernilai false, tombolnya muncul */}
                   {!isShowSummary && (
                     <button
                       className="btn btn-outline-success"

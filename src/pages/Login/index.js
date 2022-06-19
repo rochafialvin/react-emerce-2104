@@ -77,7 +77,7 @@ function Login() {
               <input
                 name="password"
                 placeholder="Password"
-                type="text"
+                type="password"
                 className="form-control my-2"
                 onChange={handleChange}
               />
